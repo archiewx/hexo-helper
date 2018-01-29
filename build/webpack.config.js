@@ -8,9 +8,11 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
     alias: {
-      'react-native': 'react-native-web'
+      'react-native': 'react-native-web',
+      '@': path.resolve(__dirname, '../src')
     }
   },
+  target: 'electron-renderer',
   module: {
     rules: [
       {

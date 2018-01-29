@@ -34,6 +34,15 @@ const menuTemp = [
   //   submenu: [{ role: 'minimize' }, { role: 'close' }]
   // },
   {
+    label: '开发者',
+    submenu: [
+      {
+        label: 'dev',
+        role: 'toggledevtools'
+      }
+    ]
+  },
+  {
     label: '帮助',
     role: 'help',
     submenu: [
@@ -53,12 +62,12 @@ if (process.platform === 'darwin') {
     submenu: [
       { role: 'about', label: '关于' },
       { type: 'separator' },
-      {
-        label: '设置',
-        click() {
-          setting.createWindow()
-        }
-      },
+      // {
+      //   label: '设置',
+      //   click() {
+      //     setting.createWindow()
+      //   }
+      // },
       // { role: 'services', submenu: [] },
       // { type: 'separator' },
       // { role: 'hide' },

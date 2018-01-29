@@ -16,7 +16,8 @@ module.exports = merge(baseConfig, {
   devServer: {
     host: '0.0.0.0',
     hot: true,
-    publicPath: '/'
+    publicPath: '/',
+    historyApiFallback: true
   },
   module: {
     rules: [
