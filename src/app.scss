@@ -1,0 +1,48 @@
+html,
+body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  -webkit-app-region: drag;
+  user-select: none;
+  background-color: #fff;
+  position: relative;
+}
+body {
+  padding: 30px 10px;
+}
+.btn {
+  -webkit-app-region: no-drag;
+}
+
+.swiper-enter {
+  opacity: 0;
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-100%)
+}
+
+.swiper-enter.swiper-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: all .3s ease-in;
+}
+
+.swiper-exit {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.swiper-exit.swiper-exit-active {
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: all .3s ease-in;
+}

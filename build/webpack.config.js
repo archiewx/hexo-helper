@@ -9,7 +9,8 @@ module.exports = {
     extensions: ['.js', '.jsx', '.json'],
     alias: {
       'react-native': 'react-native-web',
-      '@': path.resolve(__dirname, '../src')
+      '@': path.resolve(__dirname, '../src'),
+      'main': path.resolve(__dirname, '../main')
     }
   },
   target: 'electron-renderer',

@@ -1,0 +1,5 @@
+{
+  "name": "qiniuyunsetting",
+  "main": "./KeySettings.jsx",
+  "version": "0.0.1"
+}

@@ -1,22 +1,38 @@
 const electron = require('electron')
-const menuTemp = require('./src/config/menus')
+const fs = require('fs')
+const axios = require('axios')
+const path = require('path')
+const url = require('url')
+const menuTemp = require('./main/config/menus')
+const mainProcessConf = require('./main/utils/mainProcessConf')
+const shortcutCmdU = require('./main/operations/ShortcutCmdU')
+const contextMenu = require('./main/utils/contextMenu')
+const notification = require('./main/utils/mainNotification')
 // Module to control application life.
 const app = electron.app
 const Menu = electron.Menu
 const ipcMain = electron.ipcMain
 const globalShortcut = electron.globalShortcut
+const isDev = process.env.NODE_ENV === 'development'
 
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
 // const Notification = electron.Notification
 
-const path = require('path')
-const url = require('url')
 // 得到用户目录
 const homeDir = app.getPath('home')
-const reactDevTools =
-  homeDir +
-  '/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/2.5.2_0'
+let reactVersion = ''
+let reactDevTools = ''
+if (isDev) {
+  reactVersion = fs.readdirSync(
+    homeDir +
+      '/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/'
+  )
+  reactDevTools = `${homeDir}/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/${
+    reactVersion[0]
+  }`
+}
+
 app.setAboutPanelOptions({
   applicationName: 'hexo helper',
   applicationVersion: '0.0.1',
@@ -30,13 +46,19 @@ app.dock.bounce('critical')
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 let reactName
+let appIcon
+
+// 创建之前进行初始配置文件操作
+mainProcessConf.boot()
+axios.defaults.baseURL = isDev ? 'http://localhost:3000' : 'https://util.wangxdog.cn'
 
 function createWindow() {
   // Create the browser window.
   const mainWindowOptions = {
+    id: 'homeWindow',
     width: 400,
     height: 600,
-    title: 'hexo资源神器',
+    title: 'hexo上传',
     titleBarStyle: 'hidden',
     resizable: true,
     skipTaskbar: true,
@@ -47,16 +69,16 @@ function createWindow() {
     webPreferences: {
       scrollBounce: true
     },
-    icon: path.resolve(__dirname, 'assets/btn.png')
+    icon: appIcon
   }
   mainWindow = new BrowserWindow(mainWindowOptions)
 
   // and load the index.html of the app.
   mainWindow.loadURL(
     process.env.NODE_ENV === 'development'
-      ? 'http://localhost:8080/index'
+      ? 'http://localhost:8080'
       : url.format({
-          pathname: path.join(__dirname, 'index.html'),
+          pathname: path.join(__dirname, '/index.html'),
           protocol: 'file:',
           slashes: true
         })
@@ -72,16 +94,20 @@ function createWindow() {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    BrowserWindow.removeDevToolsExtension(reactName)
+    if (process.env.NODE_ENV === 'development' && reactName) {
+      BrowserWindow.removeDevToolsExtension(reactName)
+    }
     mainWindow = null
   })
   mainWindow.once('ready-to-show', function() {
     mainWindow.show()
-    reactName = BrowserWindow.addDevToolsExtension(reactDevTools)
+    if (process.env.NODE_ENV === 'development' && reactDevTools) {
+      reactName = BrowserWindow.addDevToolsExtension(reactDevTools)
+    }
   })
-  mainWindow.on('swipe', function(event, direction) {
-    ipcMain.emit()
-  })
+  // mainWindow.on('swipe', function(event, direction) {
+  // ipcMain.emit()
+  // })
 }
 
 // This method will be called when Electron has finished
@@ -90,11 +116,16 @@ function createWindow() {
 app.on('ready', function() {
   // 使用快捷键自定义上传图片
   const ret = globalShortcut.register('Command+U', () => {
-    console.log('good')
+    // 使用快捷键上传
+    shortcutCmdU()
   })
   if (!ret) {
-    console.log('registration failed')
+    notification.fail({
+      title: '快捷键失效',
+      body: '您的MACOS使用了和本软件冲入的Command+U的快捷键'
+    })
   }
+  appIcon = contextMenu()
   createWindow()
 })
 
@@ -120,12 +151,11 @@ app.on('activate', function() {
 })
 
 ipcMain.on('uploading', function(event, percent) {
-  console.log(event, percent)
   if (mainWindow instanceof BrowserWindow) {
     mainWindow.setProgressBar(percent)
   }
 })
-ipcMain.on('upload-done', function(event) {
+ipcMain.on('upload-done', function() {
   if (mainWindow instanceof BrowserWindow) {
     mainWindow.setProgressBar(-1)
   }

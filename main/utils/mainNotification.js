@@ -1,12 +1,16 @@
-import electron from 'electron'
-import path from 'path'
+const electron = require('electron')
+const path = require('path')
 
-const Notification = electron.remote.Notification
-const nativeImage = electron.remote.nativeImage
-const okImage = nativeImage.createFromPath(path.resolve(__dirname, '../assets/icons8-ok.png'))
-const failImage = nativeImage.createFromPath(path.resolve(__dirname, '../assets/icons8-cancel.png'))
+const Notification = electron.Notification
+const nativeImage = electron.nativeImage
+const okImage = nativeImage.createFromPath(
+  path.resolve(__dirname, '../../src/assets/icons8-ok.png')
+)
+const failImage = nativeImage.createFromPath(
+  path.resolve(__dirname, '../../src/assets/icons8-cancel.png')
+)
 
-export default {
+module.exports = {
   success(options) {
     const notification = new Notification({
       title: options.title || '成功',

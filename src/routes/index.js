@@ -1,11 +1,15 @@
-import Index from '@/components/Index'
-import Settings from '@/components/Settings'
-import FileList from '@/components/FileList'
+import Home from './home'
+import Settings from './settings'
+import FileList from './fileList'
+import QiniuSet from './qiuSets'
+import QnyunAdd from './qnyunEdit'
+import AliossSet from './aliyunOss'
+import KeySettings from './keySettings'
 
 export default [
   {
-    path: '/index',
-    component: Index
+    path: '/',
+    component: Home
   },
   {
     path: '/settings',
@@ -14,5 +18,21 @@ export default [
   {
     path: '/file-list',
     component: FileList
+  },
+  {
+    path: '/qn-set',
+    component: QiniuSet
+  },
+  {
+    path: '/qn-edit',
+    component: QnyunAdd
+  },
+  {
+    path: '/key-settings',
+    component: KeySettings
+  },
+  {
+    path: '/alioss-set',
+    component: AliossSet
   }
 ]

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <meta charset="UTF-8">
   </head>
@@ -7,5 +8,13 @@
   <body>
     <div id="root"></div>
   </body>
+  <script>
+    const { ipcRenderer } = require('electron')
+    const updateOnlineStatus = () => {
+      ipcRenderer.send('online-status-changed', navigator.onLine ? 'online' : 'offline')
+    }
+    window.addEventListener('online', updateOnlineStatus)
+    window.addEventListener('offline', updateOnlineStatus)
+  </script>
 
 </html>

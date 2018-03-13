@@ -52,6 +52,10 @@ module.exports = merge(baseConfig, {
       template: path.resolve(__dirname, '../src/templates/index.html'),
       chunks: ['vendor', 'manifest', 'renderer'],
       filename: path.resolve(__dirname, '../index.html')
-    })
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production')
+    }),
+    new webpack.optimize.UglifyJsPlugin()
   ]
 })
