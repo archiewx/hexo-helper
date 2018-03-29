@@ -13,9 +13,13 @@ script:
   - npm run mac-app
   - npm run mac-dmg
 
+notifications:
+  email: false
+
 branches:
-  only:
+    only:
     - master
+    - /v\d+\.\d+[a-z]/
 
 before_deploy:
   - git config --local user.name "zsirfs"
