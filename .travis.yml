@@ -30,6 +30,6 @@ deploy:
   file: release/**/*
   skip_cleanup: true
   on:
-    repo: zsirfs/hexo-help
+    repo: zsirfs/hexo-helper
     tags: true
     all_branches: true
