@@ -1,0 +1,25 @@
+language: node_js
+node_js: stable
+
+before_install:
+
+install:
+  - npm install
+
+script:
+  - npm run w-build
+  - npm run mac-app
+  - npm run mac-dmg
+
+before_deploy:
+  - git config --local user.name "zsirfs"
+  - git config --local user.email "zhenglfsir@gmail.com"
+  - git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
+deploy:
+  provider: releases
+  api_key: $GITHUB_TOKEN
+  file_blob: true
+  file: release/**/*
+  skip_cleanup: true
+  on:
+    tags: true
