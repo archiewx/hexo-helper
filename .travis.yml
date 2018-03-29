@@ -23,8 +23,7 @@ before_deploy:
   - git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
 deploy:
   provider: releases
-  api_key: 
-    secure: $GITHUB_TOKEN
+  api_key: $GITHUB_TOKEN
   file_blob: true
   overwrite: true
   file: release/**/*
