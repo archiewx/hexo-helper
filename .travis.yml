@@ -11,6 +11,10 @@ script:
   - npm run mac-app
   - npm run mac-dmg
 
+branches:
+  only:
+    - master
+
 before_deploy:
   - git config --local user.name "zsirfs"
   - git config --local user.email "zhenglfsir@gmail.com"
@@ -19,6 +23,7 @@ deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
   file_blob: true
+  overwrite: true
   file: release/**/*
   skip_cleanup: true
   on:
