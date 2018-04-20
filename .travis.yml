@@ -28,7 +28,7 @@ deploy:
   api_key: $GITHUB_TOKEN
   file_blob: true
   overwrite: true
-  file: release/**/*
+  file: release/*
   skip_cleanup: true
   on:
     repo: zsirfs/hexo-helper
