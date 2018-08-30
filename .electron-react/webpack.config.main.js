@@ -2,7 +2,7 @@
  * @Author: zhenglfsir@gmail.com
  * @Date: 2018-08-16 16:03:51
  * @Last Modified by: zhenglfsir@gmail.com
- * @Last Modified time: 2018-08-29 14:59:03
+ * @Last Modified time: 2018-08-30 14:27:32
  */
 const path = require('path')
 const webpack = require('webpack')
@@ -54,6 +54,9 @@ if (isDev()) {
   )
 } else {
   mainConfig.mode = 'production'
+  new webpack.DefinePlugin({
+    'process.env.NODE_ENV': '"production"'
+  })
 }
 
 module.exports = exports = mainConfig

@@ -3,13 +3,13 @@ const electron = require('electron')
 // const axios = require('axios')
 // const path = require('path')
 // const url = require('url')
-const menuTemp = require('./config/menus')
+// const menuTemp = require('./config/menus')
 // const mainProcessConf = require('./utils/mainProcessConf')
 // const contextMenu = require('./utils/contextMenu')
 // const operations = require('./operations')
 // Module to control application life.
 const app = electron.app
-const Menu = electron.Menu
+// const Menu = electron.Menu
 const ipcMain = electron.ipcMain
 const globalShortcut = electron.globalShortcut
 // const isDev = process.env.NODE_ENV === 'development'
@@ -80,8 +80,8 @@ function createWindow() {
       ? 'http://localhost:9080'
       : `file://${__dirname}/index.html`
   )
-  const menu = Menu.buildFromTemplate(menuTemp)
-  Menu.setApplicationMenu(menu)
+  // const menu = Menu.buildFromTemplate(menuTemp)
+  // Menu.setApplicationMenu(menu)
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
