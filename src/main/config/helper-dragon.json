@@ -1,0 +1,32 @@
+{
+  "version": "0.0.5",
+  "name": "helper.conf",
+  "qiniu": {
+    "prefix": "dragon-qiniu",
+    "accessKey": "",
+    "secretKey": "",
+    "isDefault": true,
+    "buckets": []
+  },
+  "oss": {
+    "prefix": "dragon-aliyun",
+    "accessKey": "",
+    "secretKey": "",
+    "isDefault": false,
+    "buckets": []
+  },
+  "autoClear": {
+    "auto": false,
+    "asService": false,
+    "directory": "",
+    "match": "string",
+    "matchType": ["string", "regex"],
+    "when": "luanch",
+    "whenList": ["luanch", "fixed-date"],
+    "defaultClearFunc": "not_use_time",
+    "clearFuncs": ["not_use_time"],
+    "fixedDate": "",
+    "notUserDate": "",
+    "description": "自动清理功能"
+  }
+}

@@ -9,7 +9,9 @@
         "style": "css"
       }
     ],
-    "styled-components"
+    "styled-components",
+    "transform-object-rest-spread",
+    "transform-class-properties"
   ],
-  "presets": ["es2015", "stage-0", "react"]
+  "presets": [["env"], "react"]
 }
